@@ -20,7 +20,7 @@ public class Matrices{
     if(leftMatrix.length != rightMatrix.length){
       return null;
     }
-    double[] product = new double[leftMatrix.length];
+    double[] product = new double[rightMatrix[0].length];
     for(int rightCol = 0; rightCol < rightMatrix[0].length; rightCol++){
       for(int leftCol = 0; leftCol < leftMatrix.length; leftCol++) {
         product[rightCol] += leftMatrix[leftCol] * rightMatrix[leftCol][rightCol];
@@ -322,5 +322,12 @@ public class Matrices{
         }
       }
     }
+  }
+
+  public static void printArray(double[] array){
+    for(int i = 0; i < array.length; i++){
+      System.out.print(array[i] + " ");
+    }
+    System.out.println();
   }
 }
