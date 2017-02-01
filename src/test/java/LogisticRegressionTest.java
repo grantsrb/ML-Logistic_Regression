@@ -65,8 +65,17 @@ public class LogisticRegressionTest {
   public void gradientAndStep_performsASingleOptimizationStepForAllParams_doubleArray(){
     double[][] input = {{1,1,1,1,1,1,1},{1,0,1,0,1,0,1}};
     double[] output = {1,0,1,0,1,0,1};
-    double[] params = {0.1,10};
+    double[] params = {1.0,5};
     double[] testOutput = lrObj.gradientAndStep(input, output, params, 0.01);
+    assertTrue(testOutput[0] < params[0] && testOutput[1] > params[1]);
+  }
+
+  @Test
+  public void optimizeParams_performsFullOptimizationOfParameters_doubleArray() {
+    double[][] input = {{1,1,1,1,1,1,1},{1,0,1,0,1,0,1}};
+    double[] output = {1,0,1,0,1,0,1};
+    double[] params = {1.0,1.0};
+    double[] testOutput = lrObj.optimizeParams(input, output, params, 0.001, 0.000001);
     assertTrue(testOutput[0] < params[0] && testOutput[1] > params[1]);
   }
 }

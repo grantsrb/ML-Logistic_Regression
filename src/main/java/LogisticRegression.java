@@ -52,8 +52,15 @@ public class LogisticRegression{
     return updatedParams;
   }
 
-  public double[] optimizeParams(double[][] inputs, double[] outputs, double[] params, double learningRate){
-    return null;
+  public double[] optimizeParams(double[][] inputs, double[] outputs, double[] params, double learningRate, double threshold){
+    double kost = cost(inputs, outputs, params);
+    double lastKost = kost + 100;
+    while(Math.abs(kost-lastKost) > threshold){
+      lastKost = kost;
+      params = gradientAndStep(inputs, outputs, params, learningRate);
+      kost = cost(inputs, outputs, params);
+    }
+    return params;
   }
 
 }
