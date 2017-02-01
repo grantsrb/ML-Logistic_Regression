@@ -60,4 +60,13 @@ public class LogisticRegressionTest {
     double cost2 = lrObj.cost(input2, output2, params);
     assertTrue(Math.abs(cost1-cost2) < 0.0001);
   }
+
+  @Test
+  public void gradientAndStep_performsASingleOptimizationStepForAllParams_doubleArray(){
+    double[][] input = {{1,1,1,1,1,1,1},{1,0,1,0,1,0,1}};
+    double[] output = {1,0,1,0,1,0,1};
+    double[] params = {0.1,10};
+    double[] testOutput = lrObj.gradientAndStep(input, output, params, 0.01);
+    assertTrue(testOutput[0] < params[0] && testOutput[1] > params[1]);
+  }
 }

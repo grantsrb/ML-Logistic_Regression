@@ -151,6 +151,17 @@ public class Matrices{
     return product;
   }
 
+  public static double[] subtract(double[] vector1, double[] vector2) {
+    if(vector1.length != vector2.length) {
+      return null;
+    }
+    double[] differences = new double[vector1.length];
+    for(int i = 0; i < differences.length; i++) {
+      differences[i] = vector1[i] - vector2[i];
+    }
+    return differences;
+  }
+
   public static double sum(double[] vector) {
     double sum = 0d;
     for(int i = 0; i < vector.length; i++) {

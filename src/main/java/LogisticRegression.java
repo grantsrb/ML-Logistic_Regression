@@ -40,4 +40,20 @@ public class LogisticRegression{
     return (-1.0/outputs.length)*Matrices.sum(outs);
   }
 
+  public double[] gradientAndStep(double[][] inputs, double[] outputs, double[] params, double learningRate){
+    double[] predictions = sigmoid(inputs, params);
+    double[] updatedParams = new double[params.length];
+    for(int i = 0; i < params.length; i++) {
+      for(int j = 0; j < outputs.length; j++) {
+        double sum = Matrices.sum(Matrices.multiplyPairwise(Matrices.subtract(predictions, outputs), inputs[i]));
+        updatedParams[i] = params[i] - learningRate/outputs.length*sum;
+      }
+    }
+    return updatedParams;
+  }
+
+  public double[] optimizeParams(double[][] inputs, double[] outputs, double[] params, double learningRate){
+    return null;
+  }
+
 }
