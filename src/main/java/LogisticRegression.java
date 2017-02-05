@@ -19,7 +19,7 @@ public class LogisticRegression{
     return predictions;
   }
 
-  // True processes log(1-x) whereas false does log(x)
+  // True evaluates as log(1-x) whereas false is log(x)
   public double[] ln(double[] predictions, boolean oneMinus){
     double[] newPredictions = new double[predictions.length];
     for(int i = 0; i < predictions.length; i++){
@@ -32,33 +32,38 @@ public class LogisticRegression{
     return newPredictions;
   }
 
-  public double cost(double[][] inputs, double[] outputs, double[] params){
+  public double cost(double[][] inputs, double[] outputs, double[] params, double regularizationConst){
     double[] predictions = sigmoid(inputs, params);
-    double[] outs1 = Matrices.multiplyPairwise(outputs, ln(predictions, false));
-    double[] outs0 = Matrices.multiplyPairwise(Matrices.add(1,Matrices.multiply(-1,outputs)), ln(predictions, true));
-    double[] outs = Matrices.add(outs1,outs0);
-    return (-1.0/outputs.length)*Matrices.sum(outs);
+    double[] logCosts1 = Matrices.multiplyPairwise(outputs, ln(predictions, false));
+    double[] logCosts2 = Matrices.multiplyPairwise(Matrices.add(1,Matrices.multiply(-1,outputs)), ln(predictions, true));
+    double[] logCosts = Matrices.add(logCosts1,logCosts2);
+    double[] regularizationVec = Matrices.multiplyPairwise(params, params);
+    regularizationVec[0] = 0;
+    return (-1.0/outputs.length)*Matrices.sum(logCosts) +
+            regularizationConst/2.0/outputs.length*Matrices.sum(regularizationVec);
   }
 
-  public double[] gradientAndStep(double[][] inputs, double[] outputs, double[] params, double learningRate){
+  public double[] gradientAndStep(double[][] inputs, double[] outputs, double[] params, double learningRate, double regularizationConst){
     double[] predictions = sigmoid(inputs, params);
     double[] updatedParams = new double[params.length];
     for(int i = 0; i < params.length; i++) {
       for(int j = 0; j < outputs.length; j++) {
         double sum = Matrices.sum(Matrices.multiplyPairwise(Matrices.subtract(predictions, outputs), inputs[i]));
-        updatedParams[i] = params[i] - learningRate/outputs.length*sum;
+        updatedParams[i] =
+            params[i]*(1.0-learningRate*regularizationConst/outputs.length)
+            - learningRate/outputs.length*sum;
       }
     }
     return updatedParams;
   }
 
-  public double[] optimizeParams(double[][] inputs, double[] outputs, double[] params, double learningRate, double threshold){
-    double kost = cost(inputs, outputs, params);
+  public double[] optimizeParams(double[][] inputs, double[] outputs, double[] params, double learningRate, double regularizationConst, double threshold){
+    double kost = cost(inputs, outputs, params, regularizationConst);
     double lastKost = kost + 100;
     while(Math.abs(kost-lastKost) > threshold){
       lastKost = kost;
-      params = gradientAndStep(inputs, outputs, params, learningRate);
-      kost = cost(inputs, outputs, params);
+      params = gradientAndStep(inputs, outputs, params, learningRate, regularizationConst);
+      kost = cost(inputs, outputs, params, regularizationConst);
     }
     return params;
   }
