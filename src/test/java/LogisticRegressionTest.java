@@ -4,9 +4,6 @@ import static org.junit.Assert.*;
 public class LogisticRegressionTest {
   LogisticRegression lrObj = new LogisticRegression();
 
-  // double[] outs = {1,0,0,1,0,0,0,1,0};
-
-
   @Test
   public void sigmoid_runsParamterizationThruSigmoidFxn_doubleArray(){
     double[][] input = {{1,1,1,1,1,1,1,1,1},{1,0,0,1,0,0,0,1,0}};
