@@ -36,10 +36,10 @@ public class LogisticRegressionTest {
 
   @Test
   public void ln_naturalLogIsAppliedTo1minusEachElementWithinAnArray_doubleArray(){
-    double[] input = {0.1,0.5,1.0,2.0};
+    double[] input = {0.1,0.5,0.99,2.0};
     double w = Math.log(1.0-0.1);
     double x = Math.log(1.0-0.5);
-    double y = Math.log(1.0-1.0);
+    double y = Math.log(1.0-0.99);
     double z = Math.log(1.0-2.0);
     double[] expectedOutput = {w,x,y,z};
     double[] testOutput = lrObj.ln(input, true);
