@@ -24,9 +24,18 @@ public class LogisticRegression{
     double[] newPredictions = new double[predictions.length];
     for(int i = 0; i < predictions.length; i++){
       if(oneMinus){
-        newPredictions[i] = Math.log(1-predictions[i]);
+        if(1-predictions[i] <= 0){
+          newPredictions[i] = -1000;
+        } else {
+          newPredictions[i] = Math.log(1-predictions[i]);
+        }
+
       } else{
-        newPredictions[i] = Math.log(predictions[i]);
+        if(predictions[i] == 0){
+          newPredictions[i] = -1000;
+        } else {
+          newPredictions[i] = Math.log(predictions[i]);
+        }
       }
     }
     return newPredictions;
