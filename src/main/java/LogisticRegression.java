@@ -12,6 +12,17 @@ public class LogisticRegression{
     return predictions;
   }
 
+  public double[][] sigmoid(double[][] inputs, double[][] params){
+    double[][] predictions = new double[params.length][inputs[0].length];
+    for(int j = 0; j < params.length; j++) {
+      double[] z = Matrices.multiply(params[j], inputs);
+      for(int i = 0; i < predictions[0].length; i++){
+        predictions[j][i] = 1.0/(1.0 + Math.exp(-z[i]));
+      }
+    }
+    return predictions;
+  }
+
   public double[] hypothesis(double[] predictions){
     for(int i = 0; i < predictions.length; i++){
       predictions[i] = predictions[i] >= 0.5 ? 1.0 : 0.0;

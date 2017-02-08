@@ -15,6 +15,16 @@ public class LogisticRegressionTest {
   }
 
   @Test
+  public void sigmoid_runs2DParamterizationThruSigmoidFxn_2DdoubleArray(){
+    double[][] input = {{1,1,1,1,1,1,1,1,1},{1,0,0,1,0,0,0,1,0}};
+    double[][] params = {{0,1},{0,1}};
+    double x = 1.0/(1.0+Math.exp(-1));
+    double[][] expectedOutput = {{x,0.5,0.5,x,0.5,0.5,0.5,x,0.5},{x,0.5,0.5,x,0.5,0.5,0.5,x,0.5}};
+    double[][] testOutput = lrObj.sigmoid(input,params);
+    assertTrue(Matrices.equals(expectedOutput, testOutput));
+  }
+
+  @Test
   public void hypothesis_roundsToZeroOrOne_doubleArray(){
     double[] input = {0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9};
     double[] expectedOutput = {0,0,0,0,1,1,1,1,1};
